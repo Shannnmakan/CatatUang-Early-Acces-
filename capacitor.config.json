@@ -1,0 +1,9 @@
+{
+  "appId": "com.catatuang.app",
+  "appName": "CatatUang",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
