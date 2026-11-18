@@ -31,9 +31,10 @@ jobs:
         run: |
           npm install
 
-      - name: Setup Capacitor Android
+      - name: Setup Capacitor Android & Custom App Icons
         run: |
           npx cap add android || true
+          cp -rf android-res/* android/app/src/main/res/ || true
           npx cap sync android
 
       - name: Build Android APK with Gradle

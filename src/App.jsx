@@ -912,65 +912,61 @@ export default function App() {
       style={{ backgroundColor: currentTheme.headerBg }}
       className="fixed top-0 inset-x-0 z-40 backdrop-blur-md border-b-[2.5px] border-black pt-safe transition-colors"
     >
-      <div className="h-16 px-4 flex items-center justify-between gap-2 max-w-md mx-auto">
-        <div className="flex items-center gap-2.5 min-w-0">
+      <div className="h-16 px-3 flex items-center justify-between gap-2 max-w-md mx-auto">
+        <div className="flex items-center gap-2 min-w-0">
           <button
             type="button"
             onClick={() => navigateTo('beranda')}
             style={{ backgroundColor: currentTheme.accent }}
-            className="w-10 h-10 rounded-xl border-[2.5px] border-black shadow-brutal-sm flex items-center justify-center font-display font-extrabold text-black text-base shrink-0 neo-btn"
+            className="w-9 h-9 rounded-xl border-2 border-black shadow-brutal-sm flex items-center justify-center font-display font-extrabold text-black text-sm shrink-0 neo-btn"
           >
             CU
           </button>
           <div className="flex flex-col justify-center min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="font-display font-extrabold text-base text-black tracking-tight leading-none truncate">
+              <span className="font-display font-extrabold text-sm text-black tracking-tight leading-none truncate">
                 CatatUang
               </span>
-              <span
-                style={{ backgroundColor: currentTheme.accent }}
-                className="w-2 h-2 rounded-full border border-black inline-block shrink-0"
-              ></span>
               {subtitleBadge && (
-                <span className="text-[9px] font-display font-extrabold uppercase px-1.5 py-0.2 bg-white border border-black rounded-md">
+                <span className="text-[9px] font-display font-extrabold uppercase px-1.5 py-0.5 bg-white border border-black rounded-md shrink-0">
                   {subtitleBadge}
                 </span>
               )}
             </div>
             {/* Interactive Date Selector right below App Name */}
-            <div className="mt-1 flex items-center gap-1">
+            <div className="mt-1 flex items-center">
               <button
                 type="button"
                 onClick={() => setDateModalOpen(true)}
-                className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#ffedd5] hover:bg-[#fed7aa] border-[1.5px] border-black rounded-full shadow-[1.5px_1.5px_0px_#000] text-[10px] font-display font-bold uppercase tracking-wider text-black active:translate-x-0.5 active:translate-y-0.5 transition-transform"
+                className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#ffedd5] hover:bg-[#fed7aa] border border-black rounded-full shadow-[1px_1px_0px_#000] text-[9.5px] font-display font-bold uppercase tracking-wider text-black active:translate-x-0.5 active:translate-y-0.5 transition-transform truncate"
               >
-                <span className="material-symbols-outlined !text-[12px] leading-none">calendar_today</span>
-                <span>
+                <span className="material-symbols-outlined !text-[11px] leading-none">calendar_today</span>
+                <span className="truncate">
                   {dateFilterMode === 'exact-date'
                     ? formatDateIndo(selectedDate)
-                    : `${formatDateIndo(selectedDate)} • Bulanan`}
+                    : `${formatDateIndo(selectedDate)} • Bln`}
                 </span>
-                <span className="material-symbols-outlined !text-[13px] leading-none">expand_more</span>
+                <span className="material-symbols-outlined !text-[12px] leading-none">expand_more</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Right Actions: Login dengan Google Button & Avatar Settings Button */}
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Right Actions: Login Button & Avatar */}
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
             type="button"
             onClick={() => setLoginModalOpen(true)}
-            title={googleUser ? `Akun Google: ${googleUser.email}` : 'Login dengan Google'}
-            className={`h-10 px-2.5 flex items-center justify-center gap-1.5 rounded-xl border-[2.5px] border-black shadow-brutal-sm text-black neo-btn ${
+            title={googleUser ? `Akun: ${googleUser.email}` : 'Masuk Akun'}
+            className={`h-9 px-2 flex items-center justify-center gap-1.5 rounded-xl border-2 border-black shadow-neo-sm text-black neo-btn ${
               googleUser ? 'bg-[#bef264]' : 'bg-white hover:bg-[#fef08a]'
             }`}
           >
-            <span className="w-5 h-5 rounded-md bg-white border border-black flex items-center justify-center text-[11px] font-black text-black shrink-0">
+            <span className="w-4 h-4 rounded bg-white border border-black flex items-center justify-center text-[10px] font-black text-black shrink-0">
               G
             </span>
-            <span className="text-[10px] font-display font-extrabold whitespace-nowrap">
-              {googleUser ? googleUser.name.split(' ')[0] : 'Login dengan Google'}
+            <span className="text-[10px] font-display font-extrabold whitespace-nowrap max-w-[65px] truncate">
+              {googleUser ? (googleUser.name ? googleUser.name.split(' ')[0] : 'Akun') : 'Masuk'}
             </span>
           </button>
           <AvatarButton
@@ -1336,11 +1332,62 @@ export default function App() {
               </div>
             ) : (
               <div className="flex flex-col gap-3">
-                {/* One-Click Google Firebase Login */}
+                {/* Instant In-App Login (Guaranteed to work on Android APK) */}
+                <div className="bg-[#fefce8] p-3 rounded-2xl border-2 border-black shadow-neo-sm flex flex-col gap-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[18px] text-black">phonelink_setup</span>
+                    <span className="font-display font-extrabold text-xs text-black uppercase">
+                      Masuk Langsung di HP (APK)
+                    </span>
+                  </div>
+                  <p className="text-[11px] font-bold text-black/70 leading-snug">
+                    Ketik Nama & Email Google Anda. Foto profil resmi Google dan catatan Anda akan otomatis terhubung!
+                  </p>
+
+                  <form onSubmit={handleGoogleLogin} className="flex flex-col gap-2 mt-1">
+                    <div className="flex flex-col gap-0.5">
+                      <label className="text-[10px] font-extrabold uppercase text-black">Nama Anda</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Contoh: Daffa"
+                        value={loginNameInput}
+                        onChange={(e) => setLoginNameInput(e.target.value)}
+                        className="w-full px-3 py-1.5 rounded-xl border-2 border-black bg-white font-bold text-xs text-black focus:outline-none"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <label className="text-[10px] font-extrabold uppercase text-black">Email Google</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="nama@gmail.com"
+                        value={loginEmailInput}
+                        onChange={(e) => setLoginEmailInput(e.target.value)}
+                        className="w-full px-3 py-1.5 rounded-xl border-2 border-black bg-white font-bold text-xs text-black focus:outline-none"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full py-2.5 mt-1 rounded-xl bg-black text-[#bef264] font-display font-black text-xs border-2 border-black shadow-neo flex items-center justify-center gap-2 neo-btn"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                      <span>Hubungkan Akun Google</span>
+                    </button>
+                  </form>
+                </div>
+
+                <div className="flex items-center gap-2 my-0.5">
+                  <div className="h-[1.5px] bg-black/15 flex-1"></div>
+                  <span className="text-[10px] font-bold text-black/40 uppercase">atau via browser</span>
+                  <div className="h-[1.5px] bg-black/15 flex-1"></div>
+                </div>
+
+                {/* One-Click Google Firebase Browser Popup */}
                 <button
                   type="button"
                   onClick={handleGoogleFirebaseLogin}
-                  className="w-full py-3 px-4 rounded-2xl bg-white hover:bg-[#fef08a] text-black font-display font-extrabold text-xs border-2 border-black shadow-neo flex items-center justify-center gap-2.5 neo-btn"
+                  className="w-full py-2.5 px-3 rounded-2xl bg-white hover:bg-[#fef08a] text-black font-display font-extrabold text-[11px] border-2 border-black shadow-neo-sm flex items-center justify-center gap-2 neo-btn"
                 >
                   <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -1348,45 +1395,8 @@ export default function App() {
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                   </svg>
-                  <span>Masuk dengan Akun Google (Otomatis)</span>
+                  <span>Buka Dialog Google di Browser</span>
                 </button>
-
-                <div className="flex items-center gap-2 my-0.5">
-                  <div className="h-[1.5px] bg-black/15 flex-1"></div>
-                  <span className="text-[10px] font-bold text-black/40 uppercase">atau input manual</span>
-                  <div className="h-[1.5px] bg-black/15 flex-1"></div>
-                </div>
-
-                <form onSubmit={handleGoogleLogin} className="flex flex-col gap-2.5">
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-extrabold uppercase text-black">Nama Akun</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Nama Anda"
-                      value={loginNameInput}
-                      onChange={(e) => setLoginNameInput(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border-2 border-black bg-[#fefce8] font-bold text-sm text-black focus:outline-none"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-extrabold uppercase text-black">Email Google</label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="nama@gmail.com"
-                      value={loginEmailInput}
-                      onChange={(e) => setLoginEmailInput(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border-2 border-black bg-[#fefce8] font-bold text-sm text-black focus:outline-none"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full py-2.5 rounded-xl bg-black text-white font-display font-extrabold text-xs border-2 border-black shadow-neo flex items-center justify-center gap-2 neo-btn"
-                  >
-                    <span>Simpan Sesi Akun</span>
-                  </button>
-                </form>
               </div>
             )}
           </div>
@@ -1410,7 +1420,7 @@ export default function App() {
       >
         {renderSharedHeader('PENGATURAN')}
 
-        <main className="flex-1 flex flex-col w-full max-w-md mx-auto px-4 pt-20 pb-32 gap-4">
+        <main className="flex-1 flex flex-col w-full max-w-md mx-auto px-4 pt-28 pb-40 gap-4">
           {/* 1. Profil, Avatar & Login dengan Google Card */}
           <div className="bg-white rounded-3xl border-[2.5px] border-black p-4 shadow-brutal-lg flex flex-col gap-3.5">
             <div className="flex items-center gap-3">
@@ -1619,7 +1629,7 @@ export default function App() {
       >
         {renderSharedHeader('CATAT CEPAT')}
 
-        <main className="flex-1 flex flex-col w-full max-w-md mx-auto px-4 pt-20 pb-32">
+        <main className="flex-1 flex flex-col w-full max-w-md mx-auto px-4 pt-28 pb-40">
           {/* Segmented Type Selector */}
           <div className="p-1.5 bg-white border-2 border-black rounded-2xl shadow-neo flex items-center justify-between gap-2">
             <button
@@ -1959,7 +1969,7 @@ export default function App() {
       >
         {renderSharedHeader('LAPORAN')}
 
-        <main className="flex-1 flex flex-col relative w-full max-w-md mx-auto px-4 pt-20 pb-32">
+        <main className="flex-1 flex flex-col relative w-full max-w-md mx-auto px-4 pt-28 pb-40">
           <div className="flex flex-col w-full pb-4 space-y-4">
             {/* Period Selector & Quick Actions */}
             <div className="flex items-center justify-between gap-2 pt-1">
@@ -2273,7 +2283,7 @@ export default function App() {
       >
         {renderSharedHeader('ANGGARAN')}
 
-        <main className="flex-1 flex flex-col w-full max-w-md mx-auto px-4 pt-20 pb-32">
+        <main className="flex-1 flex flex-col w-full max-w-md mx-auto px-4 pt-28 pb-40">
           <div className="flex flex-col gap-4 mt-1">
             {/* Card Master Anggaran (Neobrutalism Lilac) */}
             <div className="rounded-2xl bg-neo-lilac border-[2.5px] border-black shadow-neo p-4 flex flex-col gap-3">
@@ -2511,7 +2521,7 @@ export default function App() {
     >
       {renderSharedHeader()}
 
-      <main className="flex-1 flex flex-col relative w-full px-4 pt-20 pb-32 max-w-md mx-auto">
+      <main className="flex-1 flex flex-col relative w-full px-4 pt-28 pb-40 max-w-md mx-auto">
         <div className="flex flex-col w-full gap-4">
           {/* 1. Date & Day Velocity Pill Banner (Synchronized with Header Date) */}
           <div className="flex items-center justify-between bg-white px-3 py-2 rounded-2xl border-[2.5px] border-black shadow-brutal">
